@@ -22,7 +22,7 @@ SOURCE        = 0xF0 # Default
 
 CMD_READINESS  = 0x1A
 CMD_OUTPUT_V_I = 0x1C
-
+CMD_SYSINFO    = 0x01
 
 # CAN BUS INITIALIZATION
 # needs root/sudo access, or configure this part on the OS
@@ -78,3 +78,7 @@ if __name__ == "__main__":
     set_output_v_i(400, 10)
     set_operational_on()
 
+    # This serves as keep-alive. CHARX power off if no CAN message from controller for 10 seconds.
+    while True:
+        send(CMD_SYSINFO, bytes([0,0,0,0,0,0,0,0])) #Reading system information
+        time.sleep(2) 

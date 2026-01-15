@@ -103,5 +103,10 @@ if __name__ == "__main__":
     set_mode_charge()
     set_operational_on()
    
+    # This serves as keep-alive. TRIO power off if no CAN message from controller for 10 seconds.
+    while True:
+        send(READ_COMMAND, bytes([0x01, 0x01, 0,0,0,0,0,0])) #Reading system information
+        time.sleep(2) 
+        
 
 

@@ -82,9 +82,13 @@ if __name__ == "__main__":
     
     set_operational_off()
     set_dc_voltage(200)
-    set_dc_current(5)
+    set_dc_current(1)
     set_mode_offgrid()
     set_operational_on()
-    
+   
+    # This serves as keep-alive. TRIO power off if no CAN message from controller for 10 seconds.
+    while True:
+        send(READ_COMMAND, bytes([0x01, 0x01, 0,0,0,0,0,0])) #Reading system information
+        time.sleep(2) 
 
 
